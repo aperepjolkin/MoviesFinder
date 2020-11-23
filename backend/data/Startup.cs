@@ -28,9 +28,9 @@ namespace data
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
 
-            services.AddDbContext<MoviesDbContext>(options =>
+            //https://stackoverflow.com/questions/50788272/how-to-instantiate-a-dbcontext-in-ef-core
+            services.AddDbContextPool<MoviesDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDataAccess, DataAccess>();
             services.AddMvc();
