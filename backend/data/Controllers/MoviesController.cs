@@ -9,8 +9,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Text.Json;
+using data.Model;
+using business.ViewModel;
 
-namespace api.Controllers
+namespace data.Controllers
 {
     [Route("movies")]
     [ApiController]
@@ -28,10 +30,10 @@ namespace api.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public string Get([FromBody] JsonElement movieTitle)
+        [HttpPost]
+        public string Post([FromBody] MoviesDTO movieTitle)
         {
-            var movieDataResponse = _service.GetData(movieTitle.GetRawText());
+            var movieDataResponse = _service.GetData(movieTitle.Title);
             // call function from business layer to get data in json format
             //string jsonData = @"{  
             //            'Title':'Die Hard','Year':'1988','Rated':'R','Released':'20 Jul 1988','Runtime':'132 min'

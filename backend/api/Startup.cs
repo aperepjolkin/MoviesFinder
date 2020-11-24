@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using business.Data;
+using data.Data;
 using data.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,9 +30,8 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IDataAPIAccess, DataAPIAccess>();
-            services.AddScoped<IDataAccess, DataAccess>();
-         
             services.AddCors(options =>
             {
                 options.AddPolicy(name: allowSpecificOrigins,

@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace business.Service
+namespace data.Service
 {
     public static class DataAPIService 
     {
@@ -38,8 +38,6 @@ namespace business.Service
                 }
 
             }
-
-        
 
         }
     }

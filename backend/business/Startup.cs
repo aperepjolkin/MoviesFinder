@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using business.Data;
-using data.DAL;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,16 +19,16 @@ namespace business
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            var mappingConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new AutoMapperProfile());
-            });
+            //var mappingConfig = new MapperConfiguration(mc =>
+            //{
+            //    mc.AddProfile(new AutoMapperProfile());
+            //});
 
-            IMapper mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
+            //IMapper mapper = mappingConfig.CreateMapper();
+            //services.AddSingleton(mapper);
 
-             services.AddScoped<IDataAPIAccess, DataAPIAccess>();
-             services.AddScoped<IDataAccess, DataAccess>();
+            // services.AddScoped<IDataAPIAccess, DataAPIAccess>();
+            // services.AddScoped<IDataAccess, DataAccess>();
 
 
         }

@@ -2,7 +2,7 @@
 using business.ViewModel;
 using data.Model;
 
-namespace business
+namespace data
 {
     public class AutoMapperProfile : Profile
     {

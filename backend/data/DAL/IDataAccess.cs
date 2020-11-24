@@ -10,7 +10,7 @@ namespace data.DAL
     {
         Movie FindMovieByTitle(string title);
 
-        IList<Movie> FindMovies(string title);
+        IList<Movie> FindMovies();
 
         void SaveMovieInfo(Movie move);
     }

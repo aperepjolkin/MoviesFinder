@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using data.DAL;
 
 namespace data.Migrations
 {
     [DbContext(typeof(MoviesDbContext))]
-    partial class MoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201124193005_AddedActorField")]
+    partial class AddedActorField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,9 +28,6 @@ namespace data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Actors")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Poster")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

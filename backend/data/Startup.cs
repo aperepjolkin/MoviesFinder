@@ -1,4 +1,6 @@
+using AutoMapper;
 using data.DAL;
+using data.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,16 +25,36 @@ namespace data
         }
 
         public IConfiguration Configuration { get; }
-
+        readonly string allowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperProfile());
+            });
 
-            //https://stackoverflow.com/questions/50788272/how-to-instantiate-a-dbcontext-in-ef-core
-            services.AddDbContextPool<MoviesDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddControllers();
+            services.AddScoped<DbContext, MoviesDbContext>();
+            services.AddScoped<IDataAPIAccess, DataAPIAccess>();
             services.AddScoped<IDataAccess, DataAccess>();
+
+            services.AddDbContext<MoviesDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: allowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3000/").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                                  });
+            });
+            services.AddControllers().AddNewtonsoftJson();
             services.AddMvc();
 
         }  
@@ -48,6 +70,8 @@ namespace data
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(allowSpecificOrigins);
 
             app.UseAuthorization();
 

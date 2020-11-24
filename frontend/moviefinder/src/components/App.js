@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Navigation from './Nav'
 import SearchArea from './SearchArea'
+import Movie from './Movie'
 
 class App extends Component {
 	
@@ -8,6 +9,7 @@ class App extends Component {
 		super()
 
 		this.state = {
+			findMovieByTitle: '',
 			movies: [],
 			searchTerm: ''
 		}
@@ -17,14 +19,40 @@ class App extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 
-		fetch(`http://www.omdbapi.com/?apikey=7878efa8&t=${this.state.searchTerm}`)
-		.then(data => data.json())
-		.then(data => {
-			console.log(data);
-			this.setState({
-				movies: data.results
+		(async () => {
+			const rawResponse = await fetch('https://localhost:44308/Movies', {
+			  method: 'POST',
+			  headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			  },
+			  body: JSON.stringify({"Title": this.state.searchTerm})
 			})
-		})
+			.then(data => data.json())
+			.then(data => {
+				console.log(data);
+				this.setState({
+					findMovieByTitle: data.results
+				})
+			});
+			// const data = await rawResponse.json();
+			// this.setState({
+			// 	movies: data.results
+			// })
+			// console.log(movies);
+			console.log('movie ' + this.state.findMovieByTitle);
+		  })();
+
+
+		
+		// fetch(`http://www.omdbapi.com/?apikey=7878efa8&t=${this.state.searchTerm}`)
+		// .then(data => data.json())
+		// .then(data => {
+		// 	console.log(data);
+		// 	this.setState({
+		// 		movies: data.results
+		// 	})
+		// })
 	}
 
 	handleChange = (e) => {
@@ -34,8 +62,10 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App"> 
-			<Navigation />
-			<SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
+				<Navigation />
+				<SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
+				<Movie movie={this.state.findMovieByTitle} />
+				
 			</div>
 			);
 		}

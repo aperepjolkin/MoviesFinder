@@ -7,16 +7,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using business.ViewModel;
-using business.Service;
+using data.Service;
 
-namespace business.Data
+namespace data.Data
 {
     public class DataAPIAccess : IDataAPIAccess
     {
         private readonly IDataAccess _dbAccess;
         private readonly IMapper _mapper;
+
       
-        public DataAPIAccess(IDataAccess dbAccess, IMapper mapper) {
+        public DataAPIAccess(IDataAccess dbAccess, IMapper mapper) 
+        {
 
             _dbAccess = dbAccess;
             _mapper = mapper;
@@ -41,18 +43,21 @@ namespace business.Data
             MoviesDTO movie = new MoviesDTO()
             {
                 Id = savedMovie.Id,
-                Title = savedMovie.Title
+                Title = savedMovie.Title,
+                Actors = savedMovie.Actors,
+                Poster = savedMovie.Poster
 
             };
 
-            //MoviesDTO movies = new MoviesDTO()
-            //{
-            //    Id = foundMovie.Id,
-            //    Title = foundMovie.Title
-
-            //};
-
             return _mapper.Map<MoviesDTO>(movie);
+        }
+
+        public IList<MoviesDTO> GetLastFiveSearchedMovies()
+        {
+            var movieList = _dbAccess.FindMovies();
+
+            return _mapper.Map<IList<MoviesDTO>>(movieList);
+        
         }
     }
 }

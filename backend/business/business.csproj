@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\data\data.csproj" />
+    <Folder Include="Data\" />
+    <Folder Include="Service\" />
   </ItemGroup>
 
 </Project>

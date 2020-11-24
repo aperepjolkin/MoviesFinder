@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace business.Data
+namespace data.Data
 {
     public interface IDataAPIAccess
     {

@@ -9,7 +9,7 @@ namespace data.DAL
     public class DataAccess : IDataAccess
     {
 
-        private readonly MoviesDbContext _context;
+        private  MoviesDbContext _context;
 
         public DataAccess(MoviesDbContext context)
         {
@@ -20,10 +20,11 @@ namespace data.DAL
                 return _context.Movies.FirstOrDefault(movie => movie.Title.Contains(title));
         }
 
-        public IList<Movie> FindMovies(string title)
+     
+        public IList<Movie> FindMovies()
         {
 
-           return _context.Movies.Where(movie => movie.Title.Contains(title)).ToList();
+           return _context.Movies.ToList();
 
         }
         public void SaveMovieInfo(Movie move)
