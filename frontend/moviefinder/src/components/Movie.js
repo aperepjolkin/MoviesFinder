@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 const Movie = (props) => {
 
     var movie = JSON.stringify(props.movie)
-
+    console.log("clicked")
     return (<Col>
             <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={props.movie.Poster} />
@@ -14,7 +14,7 @@ const Movie = (props) => {
                 <Card.Text>
                     {props.movie.Actors}
                 </Card.Text>
-                <Button variant="primary">Details</Button>
+                <Button variant="primary" onClick={() => props.viewMovieDetails(props.movieId)}> Details</Button>
             </Card.Body>
             </Card>
     </Col>)

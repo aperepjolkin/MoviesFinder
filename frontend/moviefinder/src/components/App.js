@@ -5,6 +5,7 @@ import Movie from './Movie'
 import Container from 'react-bootstrap/Container'
 import Row  from 'react-bootstrap/Row'
 import MovieList from './MovieList'
+import MovieView from './MovieView'
 
 class App extends Component {
 	
@@ -75,12 +76,12 @@ class App extends Component {
 		this.setState({ searchTerm: e.target.value })
 	}
 
-	viewMovieInfo = (id) => {
-		const filteredMovie = this.state.movies.filter(movie => movie.id = id)
+	viewMovieDetails = (id) => {
+		const filteredMovie = this.state.movies.filter(movie => movie.Id = id)
 
 		const currentMovie = filteredMovie.length > 0 ? filteredMovie[0] : null
 
-		this.searchTerm({ currentMovie: filteredMovie})
+		this.setState({ currentMovie: filteredMovie})
 	}
 
 	closeMovieView = () => {
@@ -93,13 +94,18 @@ class App extends Component {
 			<Container>
 				<Navigation />
 				<Row>
+					{this.state.movieOverview == null ? 
+					<div>
 						<SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
+						 <MovieList  movies={this.state.movies}  viewMovieDetails={this.viewMovieDetails}/>
+					</div>
+					: <MovieView  close={this.closeMovieView}/>} 
 				</Row>
-				{  showResult && (
-					<Movie key="1" movie={this.state.findMovieByTitle} />
+				{  
+					showResult && (
+						<Movie key="1" movie={this.state.findMovieByTitle} />
 				)}
-                 <MovieList movies={this.state.movies} />
-					
+
 		    </Container>
 			</div>
 			);

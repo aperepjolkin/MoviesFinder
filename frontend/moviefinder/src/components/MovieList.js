@@ -12,20 +12,18 @@ const MovieList = (props) => {
     
    return(
     <Container>
-    <Row>
+        <Row>
             {
                 props.movies.map((movie,i) => {
                     return (
-                        
                         <Col>
-                             <Movie key={i} movie={movie}/> 
+                             <Movie key={i} movie={movie} viewMovieDetails={props.viewMovieDetails} movieID={movie.Id} /> 
                        </Col>
                     )
                 })
             }
-        
-    </Row>
-</Container>
+        </Row>
+    </Container>
 
    )
 }
