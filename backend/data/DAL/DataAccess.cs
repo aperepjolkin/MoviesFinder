@@ -17,7 +17,7 @@ namespace data.DAL
         }
         public Movie FindMovieByTitle(string title)
         {
-                return _context.Movies.FirstOrDefault(movie => movie.Title.Contains(title));
+                return _context.Movies.FirstOrDefault(movie => movie.Title.Equals(title));
         }
 
      

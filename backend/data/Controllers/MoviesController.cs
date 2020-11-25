@@ -33,7 +33,15 @@ namespace data.Controllers
         [HttpPost]
         public string Post([FromBody] MoviesDTO movieTitle)
         {
-            var movieDataResponse = _service.GetData(movieTitle.Title);
+            var movieDataResponse = _service.GetMovieInfoByTitle(movieTitle.Title);
+          
+            return JsonConvert.SerializeObject(movieDataResponse);
+        }
+
+        [HttpGet]
+        public string Get()
+        {
+            var movieDataResponse = _service.GetSearchedMovies();
             // call function from business layer to get data in json format
             //string jsonData = @"{  
             //            'Title':'Die Hard','Year':'1988','Rated':'R','Released':'20 Jul 1988','Runtime':'132 min'

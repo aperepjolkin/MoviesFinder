@@ -24,40 +24,53 @@ namespace data.Data
             _mapper = mapper;
         }
         // Method search for a movie in api, save it to database and return it back.
-        public MoviesDTO GetData(string title)
+        public MoviesDTO GetMovieInfoByTitle(string title)
         {
-            // data from omdbapi.com
-             //_service = DataAPIService.FetchDataFromPublicAPIAsync;
-            var jsonresponse = DataAPIService.FetchDataFromPublicAPIAsync(title);
+            MoviesDTO movie = null;
 
-            // convert
-            var foundMovie = JsonConvert.DeserializeObject<Movie>(jsonresponse.Result);
-            
-            // save data to db
-            if (foundMovie != null)
-                 _dbAccess.SaveMovieInfo(foundMovie);
-
-            // retrun movie
-            var savedMovie = _dbAccess.FindMovieByTitle(foundMovie.Title);
-
-            MoviesDTO movie = new MoviesDTO()
+            // retrun movie from database
+            var savedMovie = _dbAccess.FindMovieByTitle(title);
+            if (savedMovie != null)
             {
-                Id = savedMovie.Id,
-                Title = savedMovie.Title,
-                Actors = savedMovie.Actors,
-                Poster = savedMovie.Poster
+                movie = new MoviesDTO()
+                {
+                    Id = savedMovie.Id,
+                    Title = savedMovie.Title,
+                    Actors = savedMovie.Actors,
+                    Poster = savedMovie.Poster
 
-            };
+                };
+            }
+            else { 
 
+                // data from omdbapi.com
+                //_service = DataAPIService.FetchDataFromPublicAPIAsync;
+                var jsonresponse = DataAPIService.FetchDataFromPublicAPIAsync(title);
+
+               // convert server response to object
+               var newFoundMovie = JsonConvert.DeserializeObject<Movie>(jsonresponse.Result);
+            
+              // save data to db
+              if (newFoundMovie != null)
+                   _dbAccess.SaveMovieInfo(newFoundMovie);
+
+             movie = new MoviesDTO() {
+                    Id = newFoundMovie.Id,
+                    Title = newFoundMovie.Title,
+                    Actors = newFoundMovie.Actors,
+                    Poster = newFoundMovie.Poster
+                };
+
+            }
             return _mapper.Map<MoviesDTO>(movie);
         }
 
-        public IList<MoviesDTO> GetLastFiveSearchedMovies()
-        {
-            var movieList = _dbAccess.FindMovies();
 
-            return _mapper.Map<IList<MoviesDTO>>(movieList);
-        
+        public IList<MoviesDTO> GetSearchedMovies()
+        {
+            var moviesList = _dbAccess.FindMovies();
+
+            return _mapper.Map<IList<MoviesDTO>>(moviesList);
         }
     }
 }

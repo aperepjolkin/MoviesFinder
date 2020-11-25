@@ -1,7 +1,9 @@
-import React, {Component} from 'react'
+import React, {Component, useEffect} from 'react'
 import Navigation from './Nav'
 import SearchArea from './SearchArea'
 import Movie from './Movie'
+import Container from 'react-bootstrap/Container'
+import Row  from 'react-bootstrap/Row'
 
 class App extends Component {
 	
@@ -11,9 +13,11 @@ class App extends Component {
 		this.state = {
 			findMovieByTitle: '',
 			movies: [],
-			searchTerm: ''
+			searchTerm: '',
+			showResult: false
 		}
 		this.apiKey = process.env.REACT_APP_API
+		
 	}
 
 	handleSubmit = (e) => {
@@ -30,9 +34,11 @@ class App extends Component {
 			})
 			.then(data => data.json())
 			.then(data => {
-				console.log(data);
+				console.log('data ' + data);
 				this.setState({
-					findMovieByTitle: data.results
+					findMovieByTitle: JSON.parse(data)
+					
+					//findMovieByTitle: data.results	
 				})
 			});
 			// const data = await rawResponse.json();
@@ -40,6 +46,14 @@ class App extends Component {
 			// 	movies: data.results
 			// })
 			// console.log(movies);
+			if(this.state.findMovieByTitle !== null){ 
+				this.setState({
+					showResult: true
+	
+				})
+				console.log(this.state.showResult)
+			}
+			console.log(typeof this.state.findMovieByTitle);
 			console.log('movie ' + this.state.findMovieByTitle);
 		  })();
 
@@ -55,17 +69,44 @@ class App extends Component {
 		// })
 	}
 
+	showSearchedMoviesList = () => {
+		(async () => {
+			const rawResponse = await fetch('https://localhost:44308/Movies', {
+			  method: 'GET',
+			  headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			  }
+			})
+			.then(data => data.json())
+			.then(data => {
+				console.log('data ' + data);
+				this.setState({
+					movies: [...JSON.parse(data)]
+				})
+			});
+
+			console.log(typeof this.state.movies);
+			console.log('movies list ' + this.state.movies);
+		  })();
+	}
 	handleChange = (e) => {
 		console.log(e.target.value)
 		this.setState({ searchTerm: e.target.value })
 	}
 	render() {
+		const { showResult } = this.state;
 		return (
 			<div className="App"> 
+			<Container>
 				<Navigation />
-				<SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
-				<Movie movie={this.state.findMovieByTitle} />
-				
+				<Row>
+						<SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
+				</Row>
+				{  showResult && (
+					<Movie movie={this.state.findMovieByTitle} />
+				)}
+		    </Container>
 			</div>
 			);
 		}

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using business.ViewModel;
 using data.Model;
+using System.Collections.Generic;
 
 namespace data
 {
@@ -9,6 +10,7 @@ namespace data
         public AutoMapperProfile()
         {
             CreateMap<MoviesDTO, Movie>();
+            CreateMap<IList<MoviesDTO>, IList<Movie>>();
         }
     }
 }

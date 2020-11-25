@@ -8,6 +8,8 @@ namespace data.Data
 {
     public interface IDataAPIAccess
     {
-       public MoviesDTO GetData(string title);
+       public MoviesDTO GetMovieInfoByTitle(string title);
+
+      public IList<MoviesDTO> GetSearchedMovies();
     }
 }
