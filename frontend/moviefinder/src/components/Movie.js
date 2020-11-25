@@ -3,11 +3,9 @@ import { Col } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 const Movie = (props) => {
-    console.log('Movie');
-    console.log(props.movie.Id);
-    console.log(JSON.stringify(props.movie));
+
     var movie = JSON.stringify(props.movie)
-    console.log(movie.title);
+
     return (<Col>
             <Card style={{ width: '18rem' }}>
             <Card.Img variant="top" src={props.movie.Poster} />

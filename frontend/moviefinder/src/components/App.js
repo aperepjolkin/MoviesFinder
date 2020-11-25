@@ -4,6 +4,7 @@ import SearchArea from './SearchArea'
 import Movie from './Movie'
 import Container from 'react-bootstrap/Container'
 import Row  from 'react-bootstrap/Row'
+import MovieList from './MovieList'
 
 class App extends Component {
 	
@@ -14,7 +15,8 @@ class App extends Component {
 			findMovieByTitle: '',
 			movies: [],
 			searchTerm: '',
-			showResult: false
+			showResult: false,
+			movieOverview: null
 		}
 		this.apiKey = process.env.REACT_APP_API
 		
@@ -34,40 +36,23 @@ class App extends Component {
 			})
 			.then(data => data.json())
 			.then(data => {
-				console.log('data ' + data);
 				this.setState({
 					findMovieByTitle: JSON.parse(data)
-					
-					//findMovieByTitle: data.results	
 				})
 			});
-			// const data = await rawResponse.json();
-			// this.setState({
-			// 	movies: data.results
-			// })
-			// console.log(movies);
-			if(this.state.findMovieByTitle !== null){ 
+
+			if(this.state.findMovieByTitle.Title !== null){ 
 				this.setState({
 					showResult: true
-	
 				})
-				console.log(this.state.showResult)
+				
 			}
-			console.log(typeof this.state.findMovieByTitle);
-			console.log('movie ' + this.state.findMovieByTitle);
+
 		  })();
-
-
-		
-		// fetch(`http://www.omdbapi.com/?apikey=7878efa8&t=${this.state.searchTerm}`)
-		// .then(data => data.json())
-		// .then(data => {
-		// 	console.log(data);
-		// 	this.setState({
-		// 		movies: data.results
-		// 	})
-		// })
 	}
+	componentDidMount() {
+		this.showSearchedMoviesList();
+	  }
 
 	showSearchedMoviesList = () => {
 		(async () => {
@@ -80,19 +65,26 @@ class App extends Component {
 			})
 			.then(data => data.json())
 			.then(data => {
-				console.log('data ' + data);
 				this.setState({
 					movies: [...JSON.parse(data)]
 				})
 			});
-
-			console.log(typeof this.state.movies);
-			console.log('movies list ' + this.state.movies);
 		  })();
 	}
 	handleChange = (e) => {
-		console.log(e.target.value)
 		this.setState({ searchTerm: e.target.value })
+	}
+
+	viewMovieInfo = (id) => {
+		const filteredMovie = this.state.movies.filter(movie => movie.id = id)
+
+		const currentMovie = filteredMovie.length > 0 ? filteredMovie[0] : null
+
+		this.searchTerm({ currentMovie: filteredMovie})
+	}
+
+	closeMovieView = () => {
+		this.setState({ currentMovie: null})
 	}
 	render() {
 		const { showResult } = this.state;
@@ -104,8 +96,10 @@ class App extends Component {
 						<SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
 				</Row>
 				{  showResult && (
-					<Movie movie={this.state.findMovieByTitle} />
+					<Movie key="1" movie={this.state.findMovieByTitle} />
 				)}
+                 <MovieList movies={this.state.movies} />
+					
 		    </Container>
 			</div>
 			);

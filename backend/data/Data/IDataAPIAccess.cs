@@ -1,4 +1,5 @@
 ﻿using business.ViewModel;
+using data.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace data.Data
     {
        public MoviesDTO GetMovieInfoByTitle(string title);
 
-      public IList<MoviesDTO> GetSearchedMovies();
+      public IList<Movie> GetSearchedMovies();
     }
 }

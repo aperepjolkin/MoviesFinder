@@ -13,16 +13,17 @@ const MovieList = (props) => {
    return(
     <Container>
     <Row>
-        <Col>
             {
-                
                 props.movies.map((movie,i) => {
                     return (
-                       <Movie key={i} image={movie.poster}/> 
+                        
+                        <Col>
+                             <Movie key={i} movie={movie}/> 
+                       </Col>
                     )
                 })
             }
-        </Col>
+        
     </Row>
 </Container>
 

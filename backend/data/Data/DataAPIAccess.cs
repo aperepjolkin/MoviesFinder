@@ -51,7 +51,7 @@ namespace data.Data
                var newFoundMovie = JsonConvert.DeserializeObject<Movie>(jsonresponse.Result);
             
               // save data to db
-              if (newFoundMovie != null)
+              if (newFoundMovie.Title != null)
                    _dbAccess.SaveMovieInfo(newFoundMovie);
 
              movie = new MoviesDTO() {
@@ -66,11 +66,11 @@ namespace data.Data
         }
 
 
-        public IList<MoviesDTO> GetSearchedMovies()
+        public IList<Movie> GetSearchedMovies()
         {
             var moviesList = _dbAccess.FindMovies();
 
-            return _mapper.Map<IList<MoviesDTO>>(moviesList);
+            return moviesList;
         }
     }
 }

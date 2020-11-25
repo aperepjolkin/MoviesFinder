@@ -10,7 +10,7 @@ namespace data
         public AutoMapperProfile()
         {
             CreateMap<MoviesDTO, Movie>();
-            CreateMap<IList<MoviesDTO>, IList<Movie>>();
+           
         }
     }
 }
