@@ -9,8 +9,16 @@ namespace data.Data
 {
     public interface IDataAPIAccess
     {
-       public MoviesDTO GetMovieInfoByTitle(string title);
-
-      public IList<Movie> GetSearchedMovies();
+        /// <summary>
+        /// Get movie by title
+        /// </summary>
+        /// <param name="title">Movie title</param>
+        /// <returns>Movie</returns>
+        public MoviesDTO GetMovieInfoByTitle(string title);
+        /// <summary>
+        /// Get searched list of movies
+        /// </summary>
+        /// <returns>List of movies</returns>
+         public IList<Movie> GetSearchedMovies();
     }
 }

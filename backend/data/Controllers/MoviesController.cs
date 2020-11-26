@@ -42,10 +42,6 @@ namespace data.Controllers
         public string Get()
         {
             var movieDataResponse = _service.GetSearchedMovies();
-            // call function from business layer to get data in json format
-            //string jsonData = @"{  
-            //            'Title':'Die Hard','Year':'1988','Rated':'R','Released':'20 Jul 1988','Runtime':'132 min'
-            //            }";
 
             return JsonConvert.SerializeObject(movieDataResponse);
         }

@@ -13,8 +13,12 @@ namespace data.Service
 {
     public static class DataAPIService 
     {
-        
-     
+
+        /// <summary>
+        /// Get data from omdbapi by movie title
+        /// </summary>
+        /// <param name="title"></param>
+        /// <returns></returns>
         public static async Task<string> FetchDataFromPublicAPIAsync(string title)
         {
             string API_KEY = "&apikey=7878efa8";
