@@ -43,5 +43,15 @@ namespace data.DAL
                _context.Movies.Add(move);
                _context.SaveChanges();
         }
+
+        /// <summary>
+        /// Remove movie
+        /// </summary>
+        /// <param name="move">Move to be removed</param>
+        public void RemoveMovie(Movie move)
+        {
+            _context.Remove(move);
+            _context.SaveChanges();
+        }
     }
 }

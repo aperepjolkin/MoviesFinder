@@ -18,5 +18,7 @@ namespace data.DAL
         IList<Movie> FindMovies();
 
         void SaveMovieInfo(Movie move);
+
+        void RemoveMovie(Movie move);
     }
 }

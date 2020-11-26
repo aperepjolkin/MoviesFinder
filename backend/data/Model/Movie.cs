@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace data.Model
 {
-    public class Movie
+    public class Movie : BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -15,5 +15,7 @@ namespace data.Model
         public string Actors { get; set; }
 
         public string Poster { get; set; }
+
+   
     }
 }

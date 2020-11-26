@@ -49,10 +49,19 @@ namespace data.Data
 
                // convert server response to object
                var newFoundMovie = JsonConvert.DeserializeObject<Movie>(jsonresponse.Result);
-            
-              // save data to db
-              if (newFoundMovie.Title != null)
-                   _dbAccess.SaveMovieInfo(newFoundMovie);
+
+                // save data to db
+                if (newFoundMovie.Title != null)
+                {
+                    var moviesList =_dbAccess.FindMovies();
+                    if(moviesList.Count == 5)
+                    {
+                        //Remove the  added first movie date
+                       var firstSearchedMovieByDate = moviesList.OrderBy(d => d.CreatedDate).FirstOrDefault();
+                        _dbAccess.RemoveMovie(firstSearchedMovieByDate);
+                    }
+                     _dbAccess.SaveMovieInfo(newFoundMovie);
+                }
 
              movie = new MoviesDTO() {
                     Id = newFoundMovie.Id,
