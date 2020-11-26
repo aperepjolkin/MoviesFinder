@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 const MovieView = (props) => {
+
     return (
         <Container>
             <Row onClick={props.close} style={{ cursor: "pointer", paddingTop:50}}>

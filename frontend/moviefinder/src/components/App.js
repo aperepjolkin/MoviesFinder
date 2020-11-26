@@ -17,7 +17,7 @@ class App extends Component {
 			movies: [],
 			searchTerm: '',
 			showResult: false,
-			movieOverview: null
+			currentMovieOverview: null
 		}
 		this.apiKey = process.env.REACT_APP_API
 		
@@ -77,15 +77,17 @@ class App extends Component {
 	}
 
 	viewMovieDetails = (id) => {
-		const filteredMovie = this.state.movies.filter(movie => movie.Id = id)
-
-		const currentMovie = filteredMovie.length > 0 ? filteredMovie[0] : null
-
-		this.setState({ currentMovie: filteredMovie})
+		console.log('clicked' + id) 
+		const filteredMovie = this.state.movies.filter(movie => movie.Id == id)
+		console.log(typeof filteredMovie) 
+		const test = filteredMovie.length > 0 ? filteredMovie[0]: null
+        
+		this.setState({ currentMovieOverview: test})
+		
 	}
 
 	closeMovieView = () => {
-		this.setState({ currentMovie: null})
+		this.setState({ currentMovieOverview: null})
 	}
 	render() {
 		const { showResult } = this.state;
@@ -94,17 +96,20 @@ class App extends Component {
 			<Container>
 				<Navigation />
 				<Row>
-					{this.state.movieOverview == null ? 
+					{this.state.currentMovieOverview == null ? 
 					<div>
 						<SearchArea handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
-						 <MovieList  movies={this.state.movies}  viewMovieDetails={this.viewMovieDetails}/>
+						
+						{  showResult && (
+								<Movie key="1" movie={this.state.findMovieByTitle} />
+						)}
+
+
+						<MovieList  movies={this.state.movies}  viewMovieDetails={this.viewMovieDetails}/>
 					</div>
-					: <MovieView  close={this.closeMovieView}/>} 
+					: <MovieView movieOverview={this.state.currentMovieOverview}  close={this.closeMovieView}/>} 
 				</Row>
-				{  
-					showResult && (
-						<Movie key="1" movie={this.state.findMovieByTitle} />
-				)}
+					
 
 		    </Container>
 			</div>

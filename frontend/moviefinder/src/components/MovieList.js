@@ -9,15 +9,17 @@ import { Button } from 'react-bootstrap';
 
 
 const MovieList = (props) => {
-    
+
    return(
     <Container>
         <Row>
             {
                 props.movies.map((movie,i) => {
+                    console.log('Id' + movie.Id)
+                    console.log('Poster' + movie.Poster)
                     return (
                         <Col>
-                             <Movie key={i} movie={movie} viewMovieDetails={props.viewMovieDetails} movieID={movie.Id} /> 
+                             <Movie key={i} movie={movie} viewMovieDetails={props.viewMovieDetails} movieId={movie.Id} image={movie.Poster} /> 
                        </Col>
                     )
                 })

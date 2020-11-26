@@ -4,17 +4,17 @@ import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 const Movie = (props) => {
 
-    var movie = JSON.stringify(props.movie)
-    console.log("clicked")
+   var movie = JSON.stringify(props.movie)
+  
     return (<Col>
             <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={props.movie.Poster} />
+            <Card.Img variant="top" src={props.image} />
             <Card.Body>
                 <Card.Title>{props.movie.Title}</Card.Title>
                 <Card.Text>
                     {props.movie.Actors}
                 </Card.Text>
-                <Button variant="primary" onClick={() => props.viewMovieDetails(props.movieId)}> Details</Button>
+               <p><a variant="primary" href="#" onClick={() => props.viewMovieDetails(props.movieId)}>View Details</a></p> 
             </Card.Body>
             </Card>
     </Col>)
